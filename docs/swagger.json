@@ -1,0 +1,139 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/api/v1/convert": {
+            "post": {
+                "description": "Принимает аудиофайл и целевой формат, возвращает конвертированный файл",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Audio Processing"
+                ],
+                "summary": "Конвертация аудиофайла",
+                "parameters": [
+                    {
+                        "type": "file",
+                        "description": "Аудиофайл для конвертации",
+                        "name": "audio",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "format": "string",
+                        "default": "mp3",
+                        "description": "Целевой формат (например, mp3, wav)",
+                        "name": "to",
+                        "in": "formData"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Конвертированный аудиофайл",
+                        "schema": {
+                            "type": "file"
+                        }
+                    },
+                    "400": {
+                        "description": "Ошибка валидации или обработки",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v2/convert": {
+            "post": {
+                "description": "Принимает аудиофайл и целевой формат, возвращает конвертированный файл",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Audio Processing"
+                ],
+                "summary": "Конвертация аудиофайла v2",
+                "parameters": [
+                    {
+                        "type": "file",
+                        "description": "Аудиофайл для конвертации",
+                        "name": "audio",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "format": "string",
+                        "default": "mp3",
+                        "description": "Целевой формат (например, mp3, wav)",
+                        "name": "to",
+                        "in": "formData"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Конвертированный аудиофайл",
+                        "schema": {
+                            "type": "file"
+                        }
+                    },
+                    "400": {
+                        "description": "Ошибка валидации или обработки",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/health": {
+            "get": {
+                "description": "Get service health status",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "health"
+                ],
+                "summary": "Check service health",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/healthcheck.HealthResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "healthcheck.HealthResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

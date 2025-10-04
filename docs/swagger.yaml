@@ -1,0 +1,93 @@
+definitions:
+  healthcheck.HealthResponse:
+    properties:
+      message:
+        type: string
+      status:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /api/v1/convert:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Принимает аудиофайл и целевой формат, возвращает конвертированный
+        файл
+      parameters:
+      - description: Аудиофайл для конвертации
+        in: formData
+        name: audio
+        required: true
+        type: file
+      - default: mp3
+        description: Целевой формат (например, mp3, wav)
+        format: string
+        in: formData
+        name: to
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Конвертированный аудиофайл
+          schema:
+            type: file
+        "400":
+          description: Ошибка валидации или обработки
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Конвертация аудиофайла
+      tags:
+      - Audio Processing
+  /api/v2/convert:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Принимает аудиофайл и целевой формат, возвращает конвертированный
+        файл
+      parameters:
+      - description: Аудиофайл для конвертации
+        in: formData
+        name: audio
+        required: true
+        type: file
+      - default: mp3
+        description: Целевой формат (например, mp3, wav)
+        format: string
+        in: formData
+        name: to
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Конвертированный аудиофайл
+          schema:
+            type: file
+        "400":
+          description: Ошибка валидации или обработки
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Конвертация аудиофайла v2
+      tags:
+      - Audio Processing
+  /health:
+    get:
+      description: Get service health status
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/healthcheck.HealthResponse'
+      summary: Check service health
+      tags:
+      - health
+swagger: "2.0"
