@@ -38,6 +38,7 @@ RUN mkdir -p /app/uploads /tmp
 COPY --from=builder /app/server /app/server
 COPY --from=builder /app/docs /app/docs
 COPY --from=builder /app/public /app/public
+COPY --from=builder /app/.env /app/.env
 
 # Устанавливаем права
 RUN chmod +x /app/server
