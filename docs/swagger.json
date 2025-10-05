@@ -16,7 +16,8 @@
                 "tags": [
                     "Audio Processing"
                 ],
-                "summary": "Конвертация аудиофайла",
+                "summary": "Конвертация аудиофайла 11",
+                "deprecated": true,
                 "parameters": [
                     {
                         "type": "file",
@@ -65,7 +66,7 @@
                 "tags": [
                     "Audio Processing"
                 ],
-                "summary": "Конвертация аудиофайла v2",
+                "summary": "Конвертация аудиофайла v2 использовать для webm",
                 "parameters": [
                     {
                         "type": "file",

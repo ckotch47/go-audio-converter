@@ -1,6 +1,7 @@
 package converter // ← пакет называется "utils"
 
 import (
+
 	"context"
 	"fmt"
 	"io"
@@ -68,6 +69,7 @@ func Convert(file *multipart.FileHeader, to string)  ([]byte, error){
 }
 
 func ConvertV2(file *multipart.FileHeader, _ string) ([]byte, error){
+    
     var input []byte
     src, err := file.Open()
     if err != nil {
@@ -88,10 +90,11 @@ func ConvertV2(file *multipart.FileHeader, _ string) ([]byte, error){
     defer os.Remove(inputFileName)
     os.WriteFile(inputFileName, input, 0644)
     
-
+    ctx, cancel := context.WithTimeout(context.Background(), env.FfmpegTimeout)
+    defer cancel()
 	// 5. Запускаем FFmpeg — теперь с **файлом на диске**
 	cmd := exec.CommandContext(
-		context.Background(),
+		ctx,
 		"ffmpeg",
 		"-i", inputFileName, // ← FFmpeg теперь читает файл — НЕ pipe!
 		"-c:a", "libopus",      // кодек Opus — ✅ ПРАВИЛЬНО

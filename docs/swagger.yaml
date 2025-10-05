@@ -13,6 +13,7 @@ paths:
     post:
       consumes:
       - multipart/form-data
+      deprecated: true
       description: Принимает аудиофайл и целевой формат, возвращает конвертированный
         файл
       parameters:
@@ -40,7 +41,7 @@ paths:
             additionalProperties:
               type: string
             type: object
-      summary: Конвертация аудиофайла
+      summary: Конвертация аудиофайла 11
       tags:
       - Audio Processing
   /api/v2/convert:
@@ -74,7 +75,7 @@ paths:
             additionalProperties:
               type: string
             type: object
-      summary: Конвертация аудиофайла v2
+      summary: Конвертация аудиофайла v2 использовать для webm
       tags:
       - Audio Processing
   /health:

@@ -1,12 +1,14 @@
 package converter
 
 import (
+	"audioconverter/utils/config"
+
 	"github.com/gofiber/fiber/v3"
 )
+var env = config.GetConfig()
+var semaphore = make(chan struct{}, env.MaxConcurrent) // 10 concurrent connections
 
-var semaphore = make(chan struct{}, 10) // 10 concurrent connections
-
-// @Summary Конвертация аудиофайла
+// @Summary Конвертация аудиофайла 11
 // @Description Принимает аудиофайл и целевой формат, возвращает конвертированный файл
 // @Tags Audio Processing
 // @Accept multipart/form-data
@@ -16,6 +18,7 @@ var semaphore = make(chan struct{}, 10) // 10 concurrent connections
 // @Success 200 {file} []byte "Конвертированный аудиофайл"
 // @Failure 400 {object} map[string]string "Ошибка валидации или обработки"
 // @Router /api/v1/convert [post]
+// @Deprecated true
 func ConverHeandler(c fiber.Ctx) error {
 		file, err := c.FormFile("audio")
 		
