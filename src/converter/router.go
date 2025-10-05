@@ -4,6 +4,8 @@ import (
 	"github.com/gofiber/fiber/v3"
 )
 
+var semaphore = make(chan struct{}, 10) // 10 concurrent connections
+
 // @Summary Конвертация аудиофайла
 // @Description Принимает аудиофайл и целевой формат, возвращает конвертированный файл
 // @Tags Audio Processing
@@ -60,8 +62,11 @@ func ConverV2Heandler(c fiber.Ctx) error {
 	if to == "" {
 		to = "webm"
 	}
+	// ✅ БЛОКИРУЕМ — ЖДЕМ, ПОКА ОСВОБОДИТСЯ МЕСТО В ПУЛЕ
+	semaphore <- struct{}{} // ← БЛОКИРУЕТ, ПОКА НЕ БУДЕТ СВОБОДНОГО МЕСТА
+	defer func() { <-semaphore }() // ← ОСВОБОЖДАЕМ МЕСТО, КОГДА ЗАДАЧА ЗАВЕРШИТСЯ
 	
-	c.Response().Header.Set("Content-Type", "audio/mpeg")
+	c.Response().Header.Set("Content-Type", "audio/"+to)
 	out, err := ConvertV2(file, to)
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{

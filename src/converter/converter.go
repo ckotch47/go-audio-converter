@@ -1,7 +1,6 @@
 package converter // ← пакет называется "utils"
 
 import (
-
 	"context"
 	"fmt"
 	"io"
