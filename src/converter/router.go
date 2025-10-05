@@ -3,6 +3,7 @@ package converter
 import (
 	"audioconverter/utils/config"
 
+
 	"github.com/gofiber/fiber/v3"
 )
 var env = config.GetConfig()
@@ -53,8 +54,9 @@ func ConverHeandler(c fiber.Ctx) error {
 // @Failure 400 {object} map[string]string "Ошибка валидации или обработки"
 // @Router /api/v2/convert [post]
 func ConverV2Heandler(c fiber.Ctx) error {
+
 	file, err := c.FormFile("audio")
-		
+	
 	if err != nil {
 		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"error": "audio as file as requred",
@@ -62,7 +64,8 @@ func ConverV2Heandler(c fiber.Ctx) error {
 	}
 
 	to := c.FormValue("to")
-	if to == "" {
+
+	if to == "" || !AllowedFormats[to]{
 		to = "webm"
 	}
 	// ✅ БЛОКИРУЕМ — ЖДЕМ, ПОКА ОСВОБОДИТСЯ МЕСТО В ПУЛЕ

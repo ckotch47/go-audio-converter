@@ -14,7 +14,15 @@ import (
 	"github.com/google/uuid"
 )
 
-
+var AllowedFormats = map[string]bool{
+    "mp3": true,
+    "ogg": true,
+    "webm": true,
+    "wav": true,
+    "flac": true,
+    "m4a": true,
+    "aac": true,
+}
 
 func Convert(file *multipart.FileHeader, to string)  ([]byte, error){
     var input []byte
